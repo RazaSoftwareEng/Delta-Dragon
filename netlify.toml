@@ -2,7 +2,38 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA fallback so routes like /web-design work on refresh
+# Old service URLs (e.g. /web-design) now live under /services/
+[[redirects]]
+  from = "/web-design"
+  to = "/services/web-design"
+  status = 301
+
+[[redirects]]
+  from = "/web-development"
+  to = "/services/web-development"
+  status = 301
+
+[[redirects]]
+  from = "/ecommerce"
+  to = "/services/ecommerce"
+  status = 301
+
+[[redirects]]
+  from = "/seo"
+  to = "/services/seo"
+  status = 301
+
+[[redirects]]
+  from = "/digital-marketing"
+  to = "/services/digital-marketing"
+  status = 301
+
+[[redirects]]
+  from = "/branding"
+  to = "/services/branding"
+  status = 301
+
+# SPA fallback so routes like /services/web-design work on refresh
 [[redirects]]
   from = "/*"
   to = "/index.html"

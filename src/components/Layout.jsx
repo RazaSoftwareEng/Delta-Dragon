@@ -12,8 +12,11 @@ export default function Layout() {
 
   return (
     <>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <Navbar />
-      <main>
+      <main id="main">
         <Outlet />
       </main>
       <Footer />

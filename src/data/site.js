@@ -2,12 +2,14 @@
 
 export const site = {
   name: 'Delta Dragon',
+  legalName: 'Web-Design Co., L.L.C.',
   domain: 'deltadragon.org',
   tagline: 'Websites that look sharp and work harder.',
   // TODO: replace with real contact details
   email: 'info@deltadragon.org',
   phone: '',
   address: '',
+  hours: '',
 }
 
 export const navLinks = [
@@ -18,44 +20,20 @@ export const navLinks = [
   { to: '/contact', label: 'Contact' },
 ]
 
-export const services = [
-  {
-    slug: 'web-design',
-    title: 'Web Design',
-    summary:
-      'Customized solutions to create visually appealing, user-friendly, and functional websites.',
-    points: ['UI/UX design', 'Responsive layouts', 'Brand-aligned visuals', 'Landing pages'],
-  },
-  {
-    slug: 'web-development',
-    title: 'Web Development',
-    summary: 'Fast, secure and scalable websites and web apps built on modern stacks.',
-    points: ['React front-ends', 'Custom back-ends & APIs', 'CMS integration', 'Performance tuning'],
-  },
-  {
-    slug: 'ecommerce',
-    title: 'E-Commerce',
-    summary: 'Online stores designed to convert, from product page to checkout.',
-    points: ['Store setup', 'Payment integration', 'Product catalogs', 'Conversion optimization'],
-  },
-  {
-    slug: 'seo',
-    title: 'SEO',
-    summary: 'Get found by the right customers with technical and on-page optimization.',
-    points: ['Site audits', 'Keyword research', 'On-page SEO', 'Reporting'],
-  },
-  {
-    slug: 'digital-marketing',
-    title: 'Digital Marketing',
-    summary: 'Campaigns across search and social that turn attention into leads.',
-    points: ['Social media', 'Paid ads', 'Content strategy', 'Analytics'],
-  },
-  {
-    slug: 'branding',
-    title: 'Branding',
-    summary: 'Logos and identity systems that make your business recognizable.',
-    points: ['Logo design', 'Brand guidelines', 'Marketing collateral', 'Visual identity'],
-  },
+export { services, servicePath } from './services.js'
+
+export const highlights = [
+  { icon: 'design', title: 'Custom design', text: 'No templates — built around your brand.' },
+  { icon: 'device', title: 'Fully responsive', text: 'Looks right on every screen size.' },
+  { icon: 'search', title: 'SEO-ready', text: 'Structured so search engines understand it.' },
+  { icon: 'support', title: 'Ongoing support', text: 'We stay with you after launch.' },
+]
+
+export const reasons = [
+  'One team for design, development and marketing',
+  'Clear scope, timeline and pricing before we start',
+  'Clean, maintainable code you fully own',
+  'Fast-loading pages built for real users',
 ]
 
 // TODO: replace with real projects
