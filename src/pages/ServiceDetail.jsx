@@ -3,6 +3,7 @@ import PageHeader from '../components/PageHeader.jsx'
 import SectionHead from '../components/SectionHead.jsx'
 import ProcessSteps from '../components/ProcessSteps.jsx'
 import Reveal from '../components/Reveal.jsx'
+import FaqList from '../components/FaqList.jsx'
 import Icon from '../components/Icon.jsx'
 import CTA from '../components/CTA.jsx'
 import NotFound from './NotFound.jsx'
@@ -162,17 +163,7 @@ export default function ServiceDetail() {
             title="Questions clients often ask"
             text="Can't see your question here? Get in touch and we'll answer it directly."
           />
-          <div className="faq__list">
-            {service.faqs.map((f) => (
-              <details key={f.q} className="faq__item">
-                <summary>
-                  {f.q}
-                  <Icon name="chevron" size={18} />
-                </summary>
-                <p>{f.a}</p>
-              </details>
-            ))}
-          </div>
+          <FaqList items={service.faqs} />
         </div>
       </section>
 

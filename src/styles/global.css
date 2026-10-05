@@ -387,130 +387,533 @@ img {
 /* Hero */
 .hero {
   position: relative;
-  padding: 80px 0 90px;
+  overflow: hidden;
+  padding: 96px 0 144px;
   background:
-    radial-gradient(ellipse 60% 70% at 100% 0%, rgba(184, 155, 98, 0.22), transparent 70%),
-    var(--bg);
+    radial-gradient(ellipse 70% 60% at 88% 6%, rgba(184, 155, 98, 0.28), transparent 62%),
+    radial-gradient(ellipse 60% 70% at 0% 100%, rgba(122, 29, 36, 0.55), transparent 65%),
+    linear-gradient(155deg, var(--maroon-700) 0%, var(--maroon-800) 48%, var(--maroon-900) 100%);
+}
+
+/* Soft light source behind the headline */
+.hero__glow {
+  position: absolute;
+  top: -22%;
+  left: 48%;
+  width: 60vw;
+  height: 60vw;
+  max-width: 760px;
+  max-height: 760px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 200, 154, 0.16), transparent 62%);
+  pointer-events: none;
+}
+
+/* Faint blueprint grid for depth */
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(243, 236, 214, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 236, 214, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 30%, transparent 75%);
+  pointer-events: none;
 }
 
 .hero__inner {
+  position: relative;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 3.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
   align-items: center;
+}
+
+.hero__copy h1 {
+  color: var(--cream);
+  font-size: clamp(2.25rem, 5vw, 3.8rem);
+  max-width: 15ch;
+}
+
+.hero__copy .lead {
+  color: rgba(243, 236, 214, 0.78);
+  font-size: 1.15rem;
+  max-width: 54ch;
+}
+
+/* Small badge above the headline */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.7rem;
+  padding: 0.5rem 1rem 0.5rem 0.75rem;
+  border: 1px solid rgba(217, 200, 154, 0.3);
+  border-radius: 999px;
+  background: rgba(243, 236, 214, 0.07);
+  color: var(--gold-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.pill__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold-light);
+  animation: pulse 2.6s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 200, 154, 0.5);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 9px rgba(217, 200, 154, 0);
+  }
+}
+
+/* Buttons + assurances share one bordered block */
+.hero__foot {
+  margin-top: 2.2rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(243, 236, 214, 0.16);
 }
 
 .hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-  margin-top: 2rem;
 }
 
-.hero__panel {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  max-width: 460px;
-  margin-left: auto;
-  display: grid;
-  place-items: center;
-  border-radius: 28px;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(217, 200, 154, 0.25), transparent 55%),
-    linear-gradient(145deg, var(--maroon-700), var(--maroon-900));
-  box-shadow: var(--shadow-md);
+.btn--outline-light {
+  border-color: rgba(243, 236, 214, 0.38);
+  color: var(--cream);
 }
 
-.hero__disc {
-  display: grid;
+.btn--outline-light:hover {
+  background: rgba(243, 236, 214, 0.12);
+  border-color: var(--cream);
+}
+
+/* Assurances under the hero buttons */
+.promises {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.75rem;
+  margin-top: 1.6rem;
+  list-style: none;
+}
+
+.promises li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  color: rgba(243, 236, 214, 0.76);
+}
+
+.promises__tick {
+  display: inline-grid;
   place-items: center;
-  width: 62%;
-  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  width: 23px;
+  height: 23px;
   border-radius: 50%;
+  background: rgba(217, 200, 154, 0.16);
+  color: var(--gold-light);
+}
+
+/* Staggered entrance */
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero__copy > *,
+.stack {
+  animation: heroIn 0.75s cubic-bezier(0.22, 0.7, 0.3, 1) both;
+}
+
+.hero__copy > :nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.hero__copy > :nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.hero__copy > :nth-child(3) {
+  animation-delay: 0.23s;
+}
+
+.hero__copy > :nth-child(4) {
+  animation-delay: 0.32s;
+}
+
+.stack {
+  animation-delay: 0.24s;
+}
+
+/* ============================================================
+   Hero capability stack
+   ============================================================ */
+.stack {
+  position: relative;
+  border: 1px solid rgba(243, 236, 214, 0.14);
+  border-radius: 22px;
+  padding: 1.4rem;
+  background: linear-gradient(165deg, rgba(243, 236, 214, 0.09), rgba(243, 236, 214, 0.035));
+  backdrop-filter: blur(6px);
+  box-shadow:
+    0 30px 64px rgba(18, 2, 4, 0.42),
+    inset 0 1px 0 rgba(243, 236, 214, 0.12);
+}
+
+/* Warm light behind the panel */
+.stack__glow {
+  position: absolute;
+  inset: 8% -6% -14%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 155, 98, 0.3), transparent 68%);
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+/* Header row: brand mark, labels, count */
+.stack__head {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid rgba(243, 236, 214, 0.12);
+}
+
+.stack__mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
   background: var(--cream);
-  box-shadow: 0 0 0 10px rgba(243, 236, 214, 0.12), 0 0 0 22px rgba(243, 236, 214, 0.06);
+  box-shadow: 0 6px 16px rgba(18, 2, 4, 0.3);
 }
 
-.hero__disc img {
-  width: 56%;
+.stack__mark img {
+  width: 26px;
+  height: auto;
 }
 
-.hero__chip {
+.stack__headtext {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.stack__title {
+  font-family: var(--font-brand);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.stack__sub {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+/* Service rows */
+.stack__list {
+  display: grid;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 1rem 0 0;
+  list-style: none;
+}
+
+.stack__item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.72rem 0.8rem;
+  border: 1px solid rgba(243, 236, 214, 0.1);
+  border-radius: 14px;
+  background: rgba(243, 236, 214, 0.045);
+  transition:
+    background 0.25s,
+    border-color 0.25s,
+    transform 0.25s;
+}
+
+.stack__item:hover {
+  transform: translateX(4px);
+  border-color: rgba(217, 200, 154, 0.42);
+  background: rgba(217, 200, 154, 0.13);
+}
+
+.stack__ico {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: rgba(217, 200, 154, 0.16);
+  color: var(--gold-light);
+  transition: background 0.25s, color 0.25s;
+}
+
+.stack__item:hover .stack__ico {
+  background: var(--gold-light);
+  color: var(--maroon-900);
+}
+
+.stack__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.stack__name {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.stack__desc {
+  font-size: 0.8rem;
+  color: rgba(243, 236, 214, 0.62);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.stack__arrow {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  color: rgba(217, 200, 154, 0.7);
+  transition: transform 0.25s, color 0.25s;
+}
+
+.stack__item:hover .stack__arrow {
+  transform: translateX(3px);
+  color: var(--gold-light);
+}
+
+/* Footer link listing the full range */
+.stack__all {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px dashed rgba(217, 200, 154, 0.36);
+  border-radius: 14px;
+  color: var(--cream);
+  transition: background 0.25s, border-color 0.25s;
+}
+
+.stack__all:hover {
+  background: rgba(217, 200, 154, 0.1);
+  border-color: var(--gold-light);
+}
+
+.stack__all span {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.stack__all em {
+  font-size: 0.76rem;
+  font-style: normal;
+  font-weight: 400;
+  color: rgba(243, 236, 214, 0.58);
+}
+
+.stack__all .icon {
+  flex-shrink: 0;
+  margin-left: auto;
+  color: var(--gold-light);
+  transition: transform 0.25s;
+}
+
+.stack__all:hover .icon {
+  transform: translateX(4px);
+}
+
+/* Floating commitment badges */
+.stack__badge {
   position: absolute;
   display: inline-flex;
   align-items: center;
-  gap: 0.45em;
-  padding: 0.55em 1em;
+  gap: 0.45rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid rgba(243, 236, 214, 0.14);
   border-radius: 999px;
   background: var(--surface);
   color: var(--maroon-800);
-  font-size: 0.85rem;
+  font-size: 0.76rem;
   font-weight: 600;
-  box-shadow: var(--shadow-md);
-  animation: float 6s ease-in-out infinite;
+  box-shadow: 0 14px 32px rgba(18, 2, 4, 0.4);
+  animation: drift 7s ease-in-out infinite;
 }
 
-.hero__chip--a {
-  top: 9%;
-  left: -6%;
+.stack__badge .icon {
+  color: var(--maroon-600);
 }
 
-.hero__chip--b {
-  top: 46%;
-  right: -7%;
-  animation-delay: -2s;
+.stack__badge--a {
+  top: -18px;
+  right: -12px;
 }
 
-.hero__chip--c {
-  bottom: 9%;
-  left: 4%;
-  animation-delay: -4s;
+.stack__badge--b {
+  bottom: -18px;
+  left: -16px;
+  animation-delay: -3.5s;
 }
 
-@keyframes float {
+/* The panel is a grid item, so its children need explicit positioning context */
+.stack__badge {
+  z-index: 2;
+}
+
+@keyframes drift {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-9px);
   }
 }
 
-/* Highlights strip */
+/* Standards strip.
+   Deliberately not a boxed card row — the stat band above is already four
+   dark cards, so this stays flat and hairline-separated to avoid repeating it. */
 .strip {
-  background: var(--maroon-800);
-  color: var(--cream);
-  padding: 34px 0;
+  padding: 72px 0 76px;
+  background: var(--bg-alt);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Two real columns rather than space-between, so the intro sits in a defined
+   slot instead of being flung to the far container edge */
+.strip__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: end;
+  gap: 4rem;
+  padding-bottom: 2.2rem;
+  margin-bottom: 2.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.strip__headline .eyebrow {
+  margin-bottom: 0.85rem;
+}
+
+.strip__headline h2 {
+  margin: 0;
+  max-width: 22ch;
+}
+
+/* Left aligned on purpose — right-aligned body copy gives the eye a ragged
+   edge to re-find on every line, and it detached the sentence from the
+   "these four" it refers back to in the heading. No max-width here: the grid
+   column sets the measure and lets the text end flush with the item grid. */
+.strip__intro {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--muted);
+  text-wrap: pretty;
 }
 
 .strip__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .strip__item {
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 0.9rem;
+  padding: 0 1.6rem;
+  border-left: 1px solid var(--border);
+  transition: border-color 0.28s;
 }
 
-.strip__item .icon {
-  color: var(--gold-light);
-  margin-top: 2px;
+.strip__item:first-child {
+  padding-left: 0;
+  border-left: 0;
 }
 
-.strip__item strong {
-  display: block;
+.strip__icon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--surface);
+  color: var(--maroon-700);
+  box-shadow: var(--shadow-sm);
+  transition: background 0.28s, color 0.28s, border-color 0.28s, box-shadow 0.28s;
+}
+
+.strip__item:hover .strip__icon {
+  border-color: rgba(184, 155, 98, 0.5);
+  background: linear-gradient(160deg, var(--gold-light) 0%, var(--gold) 100%);
+  color: var(--maroon-900);
+  box-shadow: 0 8px 18px rgba(42, 3, 6, 0.16);
+}
+
+.strip__title {
+  font-size: 1.02rem;
   font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+  text-wrap: balance;
 }
 
-.strip__item span {
-  font-size: 0.88rem;
-  color: rgba(243, 236, 214, 0.72);
-  line-height: 1.45;
-  display: block;
+.strip__text {
+  margin-top: 0.35rem;
+  font-size: 0.87rem;
+  line-height: 1.55;
+  color: var(--muted);
+  text-wrap: pretty;
 }
 
 /* Page header */
@@ -562,6 +965,7 @@ img {
 
 /* Sections */
 .section {
+  position: relative;
   padding: 84px 0;
 }
 
@@ -569,19 +973,96 @@ img {
   background: var(--bg-alt);
 }
 
+/* Ink band — the one dark interruption in the cream run of sections, so the
+   page gets a second maroon moment between the stats band and the footer. */
+.section--ink {
+  color: var(--cream);
+  background:
+    radial-gradient(ellipse 70% 60% at 12% -10%, rgba(217, 200, 154, 0.14), transparent 62%),
+    linear-gradient(160deg, var(--maroon-800) 0%, var(--maroon-900) 100%);
+}
+
+.section--ink h2,
+.section--ink h3 {
+  color: var(--cream);
+}
+
+.section--ink .lead {
+  color: rgba(243, 236, 214, 0.8);
+}
+
+.section--ink .eyebrow {
+  color: var(--gold-light);
+}
+
+.section--ink .eyebrow::before {
+  background: var(--gold);
+}
+
+/* Gold cap rail, matching the stat cards, to close the band off */
+.section--ink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold) 25%, var(--gold-light) 50%, var(--gold) 75%, transparent);
+}
+
+/* Two-column header: copy on the left, optional action pinned to the right */
 .section__head {
-  margin-bottom: 2.6rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2.5rem;
+  margin-bottom: 2.9rem;
+}
+
+/* Copy is capped so a long lead never runs the full container width */
+.section__head-main {
+  max-width: 56ch;
+}
+
+.section__head h2 {
+  margin-bottom: 0.45em;
 }
 
 .section__head .lead {
   margin-bottom: 0;
 }
 
+.section__head-action {
+  flex-shrink: 0;
+  padding-bottom: 0.15rem;
+}
+
+/* In the centred variant the head stacks, so the action falls under the copy
+   as a full-width block. It needs its own top margin — the shared .lead
+   margin-bottom is zeroed for the grid layout — and to centre itself, since
+   the button is inline-flex inside a centred block. */
+.section__head--center .section__head-action {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.2rem;
+  padding-bottom: 0;
+}
+
 .section__head--center {
+  display: block;
+  max-width: 62ch;
+  margin-inline: auto;
   text-align: center;
 }
 
 .section__head--center .lead {
+  margin-inline: auto;
+}
+
+/* The copy column is capped at 56ch inside a 62ch head, so it sat hard
+   against the left edge while the action centred on the head. Centring the
+   column puts the eyebrow, heading, lead and button on one axis. */
+.section__head--center .section__head-main {
   margin-inline: auto;
 }
 
@@ -590,6 +1071,29 @@ img {
   width: 28px;
   height: 2px;
   background: var(--gold);
+}
+
+/* The centred head's action is the section's only call to action, so it gets a
+   gold-rimmed treatment and a sliding arrow to read as the next step. */
+.section__head--center .section__head-action .btn {
+  padding: 0.95em 1.9em;
+  border-color: var(--maroon-800);
+  color: var(--maroon-800);
+  box-shadow: var(--shadow-sm);
+}
+
+.section__head--center .section__head-action .btn:hover {
+  background: var(--maroon-800);
+  color: var(--cream);
+  box-shadow: var(--shadow-md);
+}
+
+.section__head--center .section__head-action .btn .icon {
+  transition: transform 0.25s;
+}
+
+.section__head--center .section__head-action .btn:hover .icon {
+  transform: translateX(4px);
 }
 
 .split {
@@ -623,6 +1127,8 @@ img {
 
 .grid--3 {
   grid-template-columns: repeat(3, 1fr);
+  /* Equal card heights per row, so a longer summary cannot leave a ragged edge */
+  grid-auto-rows: 1fr;
 }
 
 /* Cards */
@@ -732,38 +1238,76 @@ img {
   color: var(--gold-light);
 }
 
-/* Process steps */
+/* Process steps — cards on a shared gold spine */
 .steps {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  counter-reset: step;
+  gap: 1.25rem;
+}
+
+/* Spine running behind the cards, visible in the gaps between them */
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 34px;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold) 12%, var(--gold) 88%, transparent);
+  opacity: 0.5;
 }
 
 .steps__item {
   position: relative;
-  padding-top: 1.4rem;
-  border-top: 2px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.8rem 1.6rem 1.9rem;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
 }
 
-.steps__item::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: 0;
-  width: 56px;
-  height: 2px;
-  background: var(--maroon-700);
+.steps__item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(184, 155, 98, 0.55);
+  box-shadow: var(--shadow-md);
 }
 
+/* Badge punches above the card so it meets the spine */
 .steps__num {
-  display: block;
-  font-family: var(--font-head);
-  font-size: 2.2rem;
+  display: inline-grid;
+  place-items: center;
+  align-self: flex-start;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1.2rem;
+  border: 2px solid var(--gold);
+  border-radius: 50%;
+  background: var(--bg-alt);
+  color: var(--maroon-800);
+  font-family: var(--font-brand);
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1;
-  color: var(--gold);
-  margin-bottom: 0.5em;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.steps__item:hover .steps__num {
+  background: var(--maroon-800);
+  border-color: var(--maroon-800);
+  color: var(--gold-light);
+}
+
+.steps__item h3 {
+  margin-bottom: 0.4em;
+}
+
+.steps__item p {
+  margin-bottom: 0;
+  text-wrap: pretty;
 }
 
 /* Service detail */
@@ -823,10 +1367,12 @@ img {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  margin-bottom: 2rem;
 }
 
 .filters__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.55em 1.2em;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -843,27 +1389,83 @@ img {
   border-color: var(--maroon-700);
 }
 
+/* Count of what is behind each filter. Decorative — the visible list below is
+   what a screen reader reads back after the change, so the number in the button
+   would only be a duplicate. */
+.filters__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--bg-alt);
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--maroon-600);
+  transition: background 0.2s, color 0.2s;
+}
+
+.filters__btn:hover .filters__count {
+  background: rgba(122, 29, 36, 0.12);
+}
+
 .filters__btn.is-active {
   background: var(--maroon-800);
   border-color: var(--maroon-800);
   color: var(--cream);
 }
 
+.filters__btn.is-active .filters__count {
+  background: rgba(217, 200, 154, 0.2);
+  color: var(--gold-light);
+}
+
+/* Announces the filtered result count to assistive tech, and gives the grid a
+   lead-in on screen where it is useful context too. */
+.filters__status {
+  margin: 1.1rem 0 1.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* ---------- work grid ---------- */
+.work {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Equal card heights per row, so a longer summary never leaves a ragged edge */
+  grid-auto-rows: 1fr;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work > .reveal {
+  display: flex;
+}
+
 .project {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
-  transition: transform 0.25s, box-shadow 0.25s;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
 }
 
 .project:hover {
   transform: translateY(-5px);
+  border-color: rgba(184, 155, 98, 0.55);
   box-shadow: var(--shadow-md);
 }
 
 .project__thumb {
+  position: relative;
   display: grid;
   place-items: center;
   aspect-ratio: 16 / 10;
@@ -876,12 +1478,193 @@ img {
   opacity: 0.35;
 }
 
+/* Sits on the thumbnail rather than in the body, so the year is paired with
+   the image the way it is on a case study listing. */
+.project__year {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  padding: 0.2em 0.6em;
+  border-radius: 999px;
+  background: rgba(42, 3, 6, 0.72);
+  font-family: var(--font-brand);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gold-light);
+}
+
 .project__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   padding: 1.2rem 1.4rem 1.4rem;
 }
 
+.project__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.7rem;
+}
+
+.project__meta .tag {
+  margin: 0;
+}
+
+.project__client {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: right;
+}
+
 .project__body h3 {
-  margin: 0.5rem 0 0;
+  margin: 0 0 0.45rem;
+}
+
+.project__body p {
+  margin: 0 0 1.1rem;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* Pushed to the card's foot so the chips line up across a row of cards with
+   different summary lengths. */
+.project__svc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: auto 0 0;
+  padding: 1.1rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.project__svc a {
+  display: inline-block;
+  padding: 0.25em 0.7em;
+  border-radius: 999px;
+  background: var(--bg-alt);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--maroon-700);
+  transition: background 0.2s, color 0.2s;
+}
+
+.project__svc a:hover {
+  background: var(--maroon-800);
+  color: var(--gold-light);
+}
+
+/* ---------- empty filter state ---------- */
+.work-empty {
+  display: grid;
+  justify-items: center;
+  gap: 0.9rem;
+  padding: 3.5rem 1.5rem;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.work-empty__ico {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--bg-alt);
+  color: var(--maroon-700);
+}
+
+.work-empty h3 {
+  margin: 0;
+}
+
+.work-empty p {
+  margin: 0;
+  max-width: 46ch;
+}
+
+/* ---------- work by service ---------- */
+.work-svc {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.work-svc > .reveal {
+  display: flex;
+}
+
+.work-svc__card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1.6rem 1.5rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.work-svc__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(184, 155, 98, 0.55);
+  box-shadow: var(--shadow-md);
+}
+
+.work-svc__ico {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 1.1rem;
+  border-radius: 12px;
+  background: var(--bg-alt);
+  color: var(--maroon-700);
+  transition: background 0.25s, color 0.25s;
+}
+
+.work-svc__card:hover .work-svc__ico {
+  background: var(--maroon-800);
+  color: var(--gold-light);
+}
+
+.work-svc__card h3 {
+  margin: 0 0 0.45rem;
+}
+
+.work-svc__card p {
+  margin: 0 0 1.2rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.work-svc__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: auto;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--maroon-600);
+}
+
+.work-svc__more .icon {
+  transition: transform 0.2s;
+}
+
+.work-svc__card:hover .work-svc__more .icon {
+  transform: translateX(4px);
 }
 
 .tag {
@@ -913,18 +1696,30 @@ img {
 
 /* CTA */
 .cta {
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  flex-wrap: wrap;
-  padding: 3.2rem;
+  gap: 2rem 3rem;
+  overflow: hidden;
+  padding: 3.4rem 3.2rem;
   border-radius: 24px;
   color: rgba(243, 236, 214, 0.82);
   background:
     radial-gradient(ellipse 50% 120% at 100% 0%, rgba(217, 200, 154, 0.25), transparent 70%),
     linear-gradient(135deg, var(--maroon-700), var(--maroon-900));
   box-shadow: var(--shadow-md);
+}
+
+/* Gold cap rail, matching the stat cards and the ink band */
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold));
 }
 
 .cta h2 {
@@ -936,77 +1731,88 @@ img {
   margin: 0;
 }
 
-/* Contact */
+.cta .eyebrow {
+  color: var(--gold-light);
+  margin-bottom: 0.9rem;
+}
+
+.cta .eyebrow::before {
+  background: var(--gold);
+}
+
+.cta__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+/* Contact — form on the left, sticky ink panel on the right */
 .contact {
   display: grid;
-  grid-template-columns: 1.8fr 1fr;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
   gap: 2rem;
   align-items: start;
 }
 
-.contact__info {
-  display: grid;
-  gap: 1.2rem;
-}
-
-.info {
-  display: flex;
-  align-items: center;
-  gap: 1.1rem;
-  padding: 1.4rem;
-}
-
-.info .icon-badge {
-  margin: 0;
-  flex-shrink: 0;
-}
-
-.info h3 {
-  margin: 0 0 0.15em;
-  font-size: 1.05rem;
-}
-
-.info a {
-  color: var(--maroon-600);
-  font-weight: 500;
-  word-break: break-word;
-}
-
-.info a:hover {
-  text-decoration: underline;
-}
-
-.info p {
-  margin: 0;
-}
-
 .form {
   display: grid;
-  gap: 1.2rem;
-  padding: 2.2rem;
+  gap: 1.3rem;
+  padding: 2.4rem;
+  align-content: start;
 }
 
-.form h2 {
+.form__head {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.form__head h2 {
   font-size: 1.6rem;
-  margin-bottom: 0.2em;
+  margin: 0;
+}
+
+.form__head .muted {
+  margin: 0;
+  font-size: 0.95rem;
+  max-width: 52ch;
 }
 
 .form__row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.3rem;
 }
 
-.form label {
+/* The label wraps its control, so clicking the text focuses the field */
+.field {
   display: grid;
   gap: 0.45rem;
   font-size: 0.9rem;
   font-weight: 600;
 }
 
+.field__label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+/* Optional marker instead of an asterisk on every required field — quieter,
+   and it says which inputs you can genuinely leave blank. */
+.field__opt {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .form input,
 .form select,
-.form textarea {
+.form textarea,
+.form .select__trigger {
   width: 100%;
   padding: 0.85em 1em;
   border-radius: var(--radius-sm);
@@ -1019,27 +1825,213 @@ img {
 }
 
 .form textarea {
-  resize: vertical;
+  /* Not user-resizable. The drag corner broke the two-column field rhythm,
+     and on touch it could be dragged wider than its own column. The field is
+     generous enough to type into as-is. */
+  resize: none;
+  min-height: 11rem;
+}
+
+/* ------------------------------------------------------------------
+   Service listbox (fine pointers) + native <select> fallback (touch)
+
+   The popup here is a real listbox, so it can show an icon and a
+   descriptor per option — neither is reachable from CSS on the OS-drawn
+   native popup. On touch the component renders the native <select>
+   instead, because the platform picker beats anything hand-built.
+   ------------------------------------------------------------------ */
+
+/* ---- shared: the closed control ---- */
+.form select,
+.form .select__trigger {
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* The two controls reserve room for the arrow differently, so they cannot
+   share one right padding:
+   - the listbox trigger is a flex row, so the arrow is a flex item and the
+     flex gap already keeps text off it. Its padding only has to match where
+     text ends on every other input, or the arrow looks inset.
+   - the native <select> is replaced, so the arrow is absolutely positioned
+     and the padding has to clear the arrow plus a gap by hand. */
+.form select {
+  padding-right: 2rem;
+}
+
+.form .select__trigger {
+  padding-right: 0.9rem;
 }
 
 .form input:focus,
 .form select:focus,
-.form textarea:focus {
+.form textarea:focus,
+.form .select__trigger:focus {
   outline: none;
   background: var(--surface);
   border-color: var(--maroon-600);
   box-shadow: 0 0 0 4px rgba(122, 29, 36, 0.12);
 }
 
-.form .btn {
-  justify-self: start;
+.select {
+  position: relative;
+}
+
+/* Lift above the fields and actions that follow it in the form, which would
+   otherwise paint straight over the popup. */
+.select[data-open] {
+  z-index: 20;
+}
+
+.select__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.select__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select__chev {
+  flex-shrink: 0;
+  color: var(--maroon-700);
+  pointer-events: none;
+  transition: transform 0.22s ease, color 0.2s;
+}
+
+.select__trigger:hover .select__chev {
+  color: var(--maroon-800);
+}
+
+.select[data-open] .select__chev {
+  color: var(--maroon-800);
+  transform: rotate(180deg);
+}
+
+/* "Select a service" is a prompt, not an answer — keep it muted until a real
+   option is chosen so the field never looks pre-filled. */
+.select[data-empty] .select__trigger,
+.field__select[data-empty] select {
+  color: var(--muted);
+}
+
+/* ---- native <select> fallback (touch) ---- */
+.field__select {
+  position: relative;
+  display: block;
+}
+
+.field__select-chev {
+  position: absolute;
+  top: 50%;
+  right: 0.7rem;
+  color: var(--maroon-700);
+  pointer-events: none;
+  transition: transform 0.22s ease, color 0.2s;
+  transform: translateY(-50%);
+}
+
+.field__select:hover .field__select-chev {
+  color: var(--maroon-800);
+}
+
+/* Focus stays on the select while the popup is open, so this doubles as the
+   open/closed cue without needing any JS to track it. */
+.field__select:focus-within .field__select-chev {
+  color: var(--maroon-800);
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* ---- the popup ---- */
+.select__list {
+  /* One option, and the cap is exactly four of them plus the list's own
+     padding and border. Deriving the cap from --opt-h means the two can
+     never drift apart the way a hand-written pixel max-height would. */
+  --opt-h: 3rem;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: calc(var(--opt-h) * 4 + 0.625rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-md);
+}
+
+.select__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: var(--opt-h);
+  padding: 0.55rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.select__option[data-active] {
+  background: var(--bg-alt);
+}
+
+.select__option[data-selected] {
+  font-weight: 600;
+}
+
+.select__check {
+  flex-shrink: 0;
+  color: var(--maroon-600);
+  opacity: 0;
+}
+
+.select__option[data-selected] .select__check {
+  opacity: 1;
+}
+
+/* Windows and Linux Chrome do honour option backgrounds in the popup list,
+   where it would otherwise fall back to the OS default against our --bg. */
+.form option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Submit row */
+.form__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.4rem;
+  padding-top: 0.35rem;
 }
 
 .form__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
   margin: 0;
-  padding: 0.9em 1.1em;
+  padding: 0.95em 1.1em;
   border-radius: var(--radius-sm);
   font-weight: 500;
+}
+
+.form__note .icon {
+  flex-shrink: 0;
+  margin-top: 0.15em;
 }
 
 .form__note--ok {
@@ -1054,6 +2046,296 @@ img {
 
 .form__note a {
   text-decoration: underline;
+}
+
+/* ---------- direct contact panel ---------- */
+.contact__aside {
+  position: sticky;
+  top: calc(var(--nav-h) + 1.5rem);
+}
+
+.contact__panel {
+  padding: 2.2rem 2rem;
+  border: 1px solid rgba(42, 3, 6, 0.32);
+  border-radius: 20px;
+  color: var(--cream);
+  background:
+    radial-gradient(ellipse 90% 70% at 0% 0%, rgba(217, 200, 154, 0.16), transparent 60%),
+    linear-gradient(160deg, var(--maroon-700) 0%, var(--maroon-900) 100%);
+  box-shadow: var(--shadow-md);
+}
+
+.contact__panel h2 {
+  color: var(--cream);
+  font-size: 1.5rem;
+  margin: 0.35rem 0 0.5rem;
+}
+
+.contact__panel .eyebrow {
+  color: var(--gold-light);
+}
+
+.contact__blurb {
+  margin: 0 0 1.5rem;
+  font-size: 0.93rem;
+  color: rgba(243, 236, 214, 0.8);
+}
+
+.contact__list {
+  display: grid;
+  gap: 1.1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+/* Small tinted disc rather than a full 52px badge — four of these in a
+   narrow column would out-weigh the details they label. */
+.contact__ico {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(217, 200, 154, 0.28);
+  border-radius: 11px;
+  background: rgba(217, 200, 154, 0.12);
+  color: var(--gold-light);
+}
+
+.contact__body {
+  display: grid;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.contact__kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+.contact__body a,
+.contact__text {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--cream);
+  word-break: break-word;
+}
+
+.contact__body a:hover {
+  text-decoration: underline;
+}
+
+.contact__divider {
+  height: 1px;
+  margin: 1.6rem 0 1.4rem;
+  background: linear-gradient(90deg, rgba(217, 200, 154, 0.4), transparent);
+}
+
+.contact__svc {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact__svc a {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: rgba(243, 236, 214, 0.9);
+  transition: background 0.2s, color 0.2s;
+}
+
+.contact__svc a:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--cream);
+}
+
+.contact__svc a .icon {
+  margin-left: auto;
+  opacity: 0;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.contact__svc a:hover .icon {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+.contact__svcnum {
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  opacity: 0.75;
+}
+
+/* ---------- before you write ---------- */
+.contact__prep {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+.contact__prep-head h2 {
+  margin: 0.5rem 0 0.6rem;
+}
+
+.contact__prep-head .lead {
+  margin-bottom: 0;
+}
+
+.contact__prep-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.contact__prep-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1.25rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.contact__prep-list p {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* Darker gold than the ink-band gold: this number sits on white, where
+   gold only reaches about 2.7:1. Maroon holds its own next to the numeral. */
+.contact__prepnum {
+  flex-shrink: 0;
+  font-family: var(--font-brand);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--maroon-600);
+}
+
+/* ---------- what happens next ---------- */
+.contact__next {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 3rem;
+  align-items: start;
+}
+
+.contact__nextintro {
+  position: sticky;
+  top: calc(var(--nav-h) + 1.5rem);
+  padding: 2.2rem 2rem;
+  border: 1px solid rgba(42, 3, 6, 0.32);
+  border-radius: 20px;
+  color: var(--cream);
+  background:
+    radial-gradient(ellipse 90% 70% at 0% 0%, rgba(217, 200, 154, 0.16), transparent 60%),
+    linear-gradient(160deg, var(--maroon-700) 0%, var(--maroon-900) 100%);
+  box-shadow: var(--shadow-md);
+}
+
+.contact__nextintro h2 {
+  color: var(--cream);
+  margin: 0.5rem 0 0.6rem;
+}
+
+.contact__nextintro .eyebrow {
+  color: var(--gold-light);
+}
+
+.contact__nextintro .lead {
+  margin-bottom: 0;
+  color: rgba(243, 236, 214, 0.8);
+}
+
+.contact__timeline {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: stage;
+}
+
+/* Gold spine linking the stages, sitting in the gap behind each number */
+.contact__stage {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.15rem;
+  padding: 0 0 1.75rem;
+}
+
+.contact__stage:last-child {
+  padding-bottom: 0;
+}
+
+.contact__stage::before {
+  content: '';
+  position: absolute;
+  top: 2.5rem;
+  bottom: 0.35rem;
+  left: 1.05rem;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold), rgba(184, 155, 98, 0.25));
+}
+
+.contact__stage:last-child::before {
+  display: none;
+}
+
+.contact__stagenum {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 2.1rem;
+  height: 2.1rem;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--maroon-800);
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 700;
+  z-index: 1;
+}
+
+.contact__stage h3 {
+  margin: 0.25rem 0 0.25rem;
+  font-size: 1.12rem;
+}
+
+.contact__stage p {
+  margin: 0;
+  font-size: 0.94rem;
+  text-wrap: pretty;
 }
 
 /* 404 */
@@ -1113,6 +2395,21 @@ img {
   font-size: 0.95rem;
 }
 
+/* Footer nav links are single-line list items, so the old .6em gap on the <li>
+   was dead space between two 19px boxes rather than a bigger target. Give the
+   link itself the padding instead — clearing the 24px minimum target size — and
+   let the padding carry the list rhythm, which keeps the pitch identical.
+   Scoped away from .footer__contact (those rows are already icon-height) and
+   away from .footer__bottom (those links sit inline in a sentence). */
+.footer ul:not(.footer__contact) li {
+  margin-bottom: 0;
+}
+
+.footer ul:not(.footer__contact) li > a {
+  display: inline-block;
+  padding-block: 0.35rem;
+}
+
 .footer li a {
   transition: color 0.2s;
 }
@@ -1145,12 +2442,851 @@ img {
   font-size: 0.85rem;
 }
 
-/* Responsive */
-@media (max-width: 960px) {
-  .hero {
-    padding: 56px 0 70px;
+/* ============================================================
+   Homepage
+   ============================================================ */
+
+/* Centred link under a section */
+.section__foot {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.8rem;
+}
+
+.grid--gap-lg {
+  gap: 1.75rem;
+}
+
+/* ============================================================
+   Stats band — an ink panel straddling the hero's lower edge
+   ============================================================ */
+.band {
+  position: relative;
+  z-index: 2;
+  padding: 76px 0 84px;
+  border-top: 1px solid rgba(42, 3, 6, 0.22);
+  /* Same pairing as .btn--gold — gold-light fill, maroon-900 type */
+  background: var(--gold-light);
+  color: var(--maroon-900);
+}
+
+.band__inner {
+  position: relative;
+}
+
+/* Header row: eyebrow left, supporting line right, sitting directly on the
+   gold band. No plate of its own — the band already carries the fill. */
+.band__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.5rem;
+  margin-bottom: 1.6rem;
+  padding: 0 0.25rem 1.35rem;
+  color: var(--maroon-900);
+}
+
+.band__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0;
+  font-family: var(--font-brand);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--maroon-900);
+  white-space: nowrap;
+}
+
+/* Tapered rule anchoring the eyebrow */
+.band__eyemark {
+  width: 40px;
+  height: 3px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--maroon-900), rgba(42, 3, 6, 0.1));
+}
+
+.band__intro {
+  max-width: 50ch;
+  margin: 0;
+  padding-left: 2.4rem;
+  border-left: 1px solid rgba(42, 3, 6, 0.16);
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--maroon-900);
+  text-align: right;
+}
+
+/* Four independent cards on the gold band. The grid is only a layout
+   container now — every visual property lives on .stat. */
+.band__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Keeps every card the same height once the grid wraps to two or one column */
+  grid-auto-rows: 1fr;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* One self-contained card per stat — no shared panel, no divider rules */
+.stat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 2.1rem 1.7rem 2.2rem;
+  /* Maroon rim, not gold — a gold border vanished against the gold band */
+  border: 1px solid rgba(42, 3, 6, 0.32);
+  border-radius: 18px;
+  background:
+    radial-gradient(ellipse 70% 80% at 50% -10%, rgba(184, 155, 98, 0.14), transparent 65%),
+    linear-gradient(165deg, var(--maroon-700) 0%, var(--maroon-800) 52%, var(--maroon-900) 100%);
+  box-shadow:
+    0 14px 30px rgba(42, 3, 6, 0.22),
+    0 2px 5px rgba(42, 3, 6, 0.16),
+    inset 0 1px 0 rgba(243, 236, 214, 0.16);
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Gold cap rail across the top of each card */
+.stat::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+
+/* Cards lift rather than change fill — an edge-lit card on a gold band
+   reads better than a tinted wash, and keeps the maroon intact */
+.stat:hover {
+  transform: translateY(-5px);
+  border-color: rgba(217, 200, 154, 0.45);
+  box-shadow:
+    0 26px 48px rgba(42, 3, 6, 0.3),
+    0 3px 8px rgba(42, 3, 6, 0.18),
+    inset 0 1px 0 rgba(243, 236, 214, 0.2);
+}
+
+.stat:hover::before {
+  opacity: 1;
+}
+
+.stat__index {
+  font-family: var(--font-brand);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(217, 200, 154, 0.86);
+}
+
+.stat__value {
+  display: flex;
+  align-items: baseline;
+  margin-top: 0.6rem;
+  font-family: var(--font-head);
+  font-size: clamp(2.4rem, 4vw, 3.3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.015em;
+  color: var(--gold-light);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.3s;
+}
+
+/* Brushed-metal sheen on the numerals. Guarded so the solid colour above
+   still applies if background-clip: text is unsupported. The hover shift is
+   a second gradient here — a plain `color` override would beat
+   `color: transparent` on specificity and kill the sheen. */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .stat__value {
+    background-image: linear-gradient(180deg, var(--cream) 0%, var(--gold-light) 52%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
+  .stat:hover .stat__value {
+    background-image: linear-gradient(180deg, #ffffff 0%, var(--cream) 52%, var(--gold-light) 100%);
+  }
+}
+
+@supports not ((-webkit-background-clip: text) or (background-clip: text)) {
+  .stat:hover .stat__value {
+    color: var(--cream);
+  }
+}
+
+.stat__suffix {
+  font-size: 0.62em;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+/* Static gold accent bar under the numeral */
+.stat__rule {
+  width: 40px;
+  height: 2px;
+  flex-shrink: 0;
+  margin: 1.05rem 0 0.9rem;
+  border-radius: 2px;
+  background: var(--gold);
+  box-shadow: 0 0 10px rgba(184, 155, 98, 0.4);
+}
+
+.stat__label {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--cream);
+  text-wrap: balance;
+}
+
+.stat__text {
+  margin-top: 0.4rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+  /* 0.82 not lower — the maroon fill plus the gold wash lifts the floor here */
+  color: rgba(243, 236, 214, 0.82);
+}
+
+/* Value-prop cards ("why us") — translucent plates on the ink band */
+.why__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Equal plate heights per row */
+  grid-auto-rows: 1fr;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.why__item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.9rem 1.7rem 2rem;
+  border: 1px solid rgba(217, 200, 154, 0.2);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.why__item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(217, 200, 154, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(10, 1, 2, 0.4);
+}
+
+/* Number on the left, icon on the right, sharing one baseline row so the
+   badge no longer sits on top of a loose numeral. */
+.why__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.35rem;
+}
+
+/* Index reads as a numbered plate rather than body text */
+.why__num {
+  flex-shrink: 0;
+  font-family: var(--font-brand);
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(217, 200, 154, 0.34);
+  transition: color 0.3s;
+}
+
+.why__item:hover .why__num {
+  color: rgba(217, 200, 154, 0.6);
+}
+
+.why__badge {
+  margin-bottom: 0;
+  border: 1px solid rgba(217, 200, 154, 0.28);
+  background: rgba(217, 200, 154, 0.12);
+  color: var(--gold-light);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Hover inverts the badge to solid gold, matching the service cards */
+.why__item:hover .why__badge {
+  border-color: var(--gold);
+  background: linear-gradient(155deg, var(--gold-light) 0%, var(--gold) 100%);
+  color: var(--maroon-900);
+}
+
+.why__item h3 {
+  margin-bottom: 0.4em;
+}
+
+/* The shared .muted is a warm grey tuned for cream backgrounds — on the ink
+   band it drops to roughly 2:1, so the copy gets its own cream tint here */
+.why__item p.muted {
+  margin-bottom: 0;
+  color: rgba(243, 236, 214, 0.78);
+  text-wrap: pretty;
+}
+
+
+
+/* Service card extras */
+.service-card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.9rem 1.7rem 1.8rem;
+  border-radius: 18px;
+}
+
+/* Maroon cap rail across the top of each card, echoing the stat cards */
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--maroon-700), var(--gold));
+  opacity: 0.85;
+  transition: opacity 0.3s;
+}
+
+.service-card:hover::before {
+  opacity: 1;
+}
+
+.service-card__glow {
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 155, 98, 0.28), transparent 68%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.service-card:hover .service-card__glow {
+  opacity: 1;
+}
+
+/* Index left, badge right, vertically centred on one row — the same header
+   arrangement as the "why us" plates, so all the cards read as one set. */
+.service-card__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.service-card__top .icon-badge {
+  margin-bottom: 0;
+}
+
+/* Decorative index. It sits in --bg-alt by design, which is far below text
+   contrast, so it is hidden from assistive tech in the markup rather than
+   left in the accessibility tree as unreadable text. The card heading and
+   its position in the grid already carry the meaning. */
+.service-card__num {
+  font-family: var(--font-brand);
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--bg-alt);
+  transition: color 0.3s;
+}
+
+.service-card:hover .service-card__num {
+  color: rgba(217, 200, 154, 0.24);
+}
+
+/* Names the checklist below it, so the block of ticks reads as a spec
+   rather than three loose bullet points. */
+.service-card__label {
+  display: block;
+  margin: 1.35rem 0 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--maroon-600);
+}
+
+/* Top spacing now comes from .service-card__label above it */
+.service-card__list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 1.05rem 1.1rem;
+  border-radius: 12px;
+  background: var(--bg-alt);
+}
+
+.service-card__list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.87rem;
+  color: var(--text);
+}
+
+.service-card__tick {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: var(--maroon-900);
+  background: linear-gradient(150deg, var(--gold-light), var(--gold));
+}
+
+.service-card .card__more {
+  margin-top: auto;
+  padding-top: 1.4rem;
+}
+
+/* Anchor targets on the services index must clear the sticky nav, or the
+   card you jumped to lands with its header underneath it. */
+.service-card[id] {
+  scroll-margin-top: calc(var(--nav-h) + 2rem);
+}
+
+/* ==========================================================================
+   About page (/about)
+   ========================================================================== */
+
+/* Second paragraph in the intro split, sitting between the head and checklist */
+.about__body {
+  margin: 0 0 1.8rem;
+  color: var(--muted);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+/* Value plates — index left, badge right, matching the service and why cards */
+.about__values {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Equal card heights per row */
+  grid-auto-rows: 1fr;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about__values > .reveal {
+  display: flex;
+}
+
+.about__value {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.9rem 1.7rem 2rem;
+  border-radius: 18px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+/* These are not links, so .card--link's lift never applies — give the plate
+   the same response by hand rather than borrowing a link modifier. */
+.about__value:hover {
+  border-color: rgba(184, 155, 98, 0.55);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.about__value-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.about__value-top .icon-badge {
+  margin-bottom: 0;
+}
+
+/* Ghost index, matching .service-card__num — decorative, so hidden from
+   assistive tech in the markup rather than left as unreadable text. */
+.about__value-num {
+  font-family: var(--font-brand);
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--bg-alt);
+  transition: color 0.3s;
+}
+
+.about__value:hover .about__value-num {
+  color: rgba(217, 200, 154, 0.24);
+}
+
+.about__value:hover .icon-badge {
+  background: var(--maroon-800);
+  color: var(--gold-light);
+}
+
+.about__value h3 {
+  margin-bottom: 0.4em;
+}
+
+.about__value p {
+  margin-bottom: 0;
+  text-wrap: pretty;
+}
+
+/* Capability tiles — denser and flatter than the value plates above, since
+   there are eight of them and they are reference rather than persuasion. */
+.about__caps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about__caps > .reveal {
+  display: flex;
+}
+
+.about__cap {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.95rem;
+  height: 100%;
+  padding: 1.35rem 1.3rem;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+
+.about__cap:hover {
+  border-color: rgba(184, 155, 98, 0.55);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Small tinted disc rather than the 52px badge — eight tiles this size need
+   the compact mark, and the heading carries the weight. */
+.about__cap-ico {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--bg-alt);
+  color: var(--maroon-700);
+  transition: background 0.25s, color 0.25s;
+}
+
+.about__cap:hover .about__cap-ico {
+  background: var(--maroon-800);
+  color: var(--gold-light);
+}
+
+.about__cap h3 {
+  margin: 0.35rem 0 0.25rem;
+  font-size: 1.02rem;
+}
+
+.about__cap p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* ==========================================================================
+   Services page (/services)
+   ========================================================================== */
+
+/* <ul> carrying the shared grid classes needs the list reset */
+.svc-grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Index rail — the full service list in one line under the page header */
+.svc-index {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+
+.svc-index__inner {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  padding-top: 1.15rem;
+  padding-bottom: 1.15rem;
+}
+
+.svc-index__label {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--maroon-600);
+}
+
+.svc-index__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Chip carries its own border so the rail reads as a set of targets
+   rather than a run of loose links. */
+.svc-index__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.9rem 0.45rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--maroon-800);
+  white-space: nowrap;
+  transition: background 0.25s, border-color 0.25s, color 0.25s, transform 0.25s;
+}
+
+.svc-index__link:hover,
+.svc-index__link:focus-visible {
+  background: var(--maroon-800);
+  border-color: var(--maroon-800);
+  color: var(--cream);
+  transform: translateY(-2px);
+}
+
+/* Gold on white only reaches 2.7:1, so the resting index is maroon and the
+   gold is held back for the inverted hover state, where it sits on maroon. */
+.svc-index__num {
+  font-family: var(--font-brand);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--maroon-600);
+  transition: color 0.25s;
+}
+
+.svc-index__link:hover .svc-index__num,
+.svc-index__link:focus-visible .svc-index__num {
+  color: var(--gold-light);
+}
+
+/* Engagement plates on the ink band — same material as the "why us" cards */
+.svc-commit {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* Equal plate heights per row */
+  grid-auto-rows: 1fr;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.svc-commit > .reveal {
+  display: flex;
+}
+
+.svc-commit__item {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 1.9rem 1.7rem 2rem;
+  border: 1px solid rgba(217, 200, 154, 0.2);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.svc-commit > .reveal:hover .svc-commit__item {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(217, 200, 154, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(10, 1, 2, 0.4);
+}
+
+.svc-commit__badge {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1.2rem;
+  border: 1px solid rgba(217, 200, 154, 0.28);
+  border-radius: 14px;
+  background: rgba(217, 200, 154, 0.12);
+  color: var(--gold-light);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Hover inverts the badge to solid gold, matching the why/service cards */
+.svc-commit > .reveal:hover .svc-commit__badge {
+  border-color: var(--gold);
+  background: linear-gradient(155deg, var(--gold-light) 0%, var(--gold) 100%);
+  color: var(--maroon-900);
+}
+
+.svc-commit__item h3 {
+  margin-bottom: 0.4em;
+}
+
+/* Shared .muted is a warm grey tuned for cream and drops to about 2:1 on
+   the ink band, so the copy carries its own cream tint here. */
+.svc-commit__item p.muted {
+  margin-bottom: 0;
+  color: rgba(243, 236, 214, 0.78);
+  text-wrap: pretty;
+}
+
+/* Testimonials — three equal cards. A featured first card read as a layout
+   fault rather than an editorial choice, so all three share one treatment. */
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Equal heights per row, so a longer quote cannot leave a ragged edge */
+  grid-auto-rows: 1fr;
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.quote {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 1.9rem 1.7rem 1.7rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.quote:hover {
+  transform: translateY(-4px);
+  border-color: rgba(184, 155, 98, 0.55);
+  box-shadow: var(--shadow-md);
+}
+
+/* Glyph and rating share one header row. The glyph used to float in the
+   top-right corner, where it collided with the header on narrow cards. */
+.quote__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.quote__stars {
+  display: flex;
+  gap: 0.15rem;
+  margin-left: auto;
+  color: var(--gold);
+}
+
+.quote__mark {
+  flex-shrink: 0;
+  font-family: var(--font-head);
+  font-size: 2.7rem;
+  line-height: 0.72;
+  color: rgba(184, 155, 98, 0.3);
+}
+
+.quote blockquote {
+  margin: 0 0 1.4rem;
+  font-size: 1.04rem;
+  line-height: 1.66;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.quote__by {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: auto;
+  padding-top: 1.15rem;
+  border-top: 1px solid var(--border);
+}
+
+.quote__avatar {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  /* Double ring, so the disc reads as a set piece rather than a hole */
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3.5px rgba(184, 155, 98, 0.45);
+  background: linear-gradient(145deg, var(--maroon-700), var(--maroon-900));
+  color: var(--gold-light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  transition: box-shadow 0.3s;
+}
+
+.quote:hover .quote__avatar {
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3.5px var(--gold);
+}
+
+.quote__who strong {
+  display: block;
+  font-size: 0.95rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+
+.quote__who > span {
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+.faq__cta {
+  margin-top: 1.8rem;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
   .hero__inner,
   .split,
   .detail,
@@ -1159,27 +3295,87 @@ img {
     gap: 2.5rem;
   }
 
-  .hero__panel {
-    max-width: 380px;
+  .hero {
+    padding: 64px 0 120px;
+  }
+
+  .stack {
+    max-width: 520px;
     margin-inline: auto;
-  }
-
-  .hero__chip--a {
-    left: -2%;
-  }
-
-  .hero__chip--b {
-    right: -2%;
   }
 
   .detail__aside {
     position: static;
   }
 
-  .grid--3,
-  .steps,
+  .band {
+    padding: 60px 0 68px;
+  }
+
+  .band__grid,
   .strip__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid--3,
+  .steps,
+  .why__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Portfolio grids follow the same three -> two -> one rhythm. Both keep
+     grid-auto-rows: 1fr so a row of cards stays flush at every step. */
+  .work,
+  .work-svc {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Two-up: the spine would cut through the cards rather than the gaps */
+  .steps::before {
+    display: none;
+  }
+
+/* Three across is too tight for a readable quote line, so go two-up */
+  .quotes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* Header action drops below the copy when the columns get tight */
+  .section__head {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .section__head-action {
+    padding-bottom: 0;
+  }
+
+  /* Two buttons need ~390px; below this they would crush the copy column */
+  .cta {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  /* Two-up: the left hairlines would land on the first column of row two,
+     so those become row rules instead */
+  .strip__item:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .strip__item:nth-child(n + 3) {
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Headline and intro no longer sit side by side */
+  .strip__head {
+    grid-template-columns: 1fr;
+    row-gap: 1.2rem;
+  }
+
+  .strip__intro {
+    max-width: 56ch;
   }
 
   .footer__grid {
@@ -1243,8 +3439,30 @@ img {
   .steps,
   .strip__grid,
   .footer__grid,
+  .work,
+  .work-svc,
   .form__row {
     grid-template-columns: 1fr;
+  }
+
+  /* Stacked: column hairlines become row rules */
+  .strip__item,
+  .strip__item:nth-child(3),
+  .strip__item:nth-child(n + 3) {
+    padding: 1.7rem 0 0;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .strip__item:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .strip__icon {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 0.95rem;
   }
 
   .logo__mark img {
@@ -1259,20 +3477,129 @@ img {
     font-size: 0.54rem;
   }
 
-  .hero__panel {
-    max-width: 300px;
+  .hero {
+    padding: 48px 0 104px;
   }
 
-  .hero__chip {
-    font-size: 0.78rem;
+  .hero__copy h1 {
+    max-width: none;
+  }
+
+  .hero__foot {
+    margin-top: 2.2rem;
+    padding-top: 1.6rem;
+  }
+
+  .stack {
+    padding: 1.1rem;
+    border-radius: 18px;
+  }
+
+  .stack__badge {
+    padding: 0.42rem 0.65rem;
+    font-size: 0.7rem;
+  }
+
+  .stack__badge--a {
+    top: -16px;
+    right: -6px;
+  }
+
+  .stack__badge--b {
+    left: -4px;
+  }
+
+  .stack__desc {
+    -webkit-line-clamp: 2;
+  }
+
+  .promises {
+    flex-direction: column;
+    gap: 0.7rem;
   }
 
   .hero__actions .btn {
     flex: 1 1 100%;
   }
 
+  .band {
+    padding: 48px 0 56px;
+  }
+
+  /* Header stacks and the intro reads left-aligned, so the vertical
+     divider between them no longer makes sense */
+  .band__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    padding: 0 0.25rem 1.2rem;
+  }
+
+  .band__intro {
+    max-width: none;
+    padding-left: 0;
+    border-left: 0;
+    text-align: left;
+  }
+
+  .band__grid,
+  .quotes,
+  .steps,
+  .why__grid {
+    grid-template-columns: 1fr;
+    /* Single column: let each card size to its own quote */
+    grid-auto-rows: auto;
+  }
+
+  /* Vertical timeline on phones — badge left, copy right */
+  .steps {
+    gap: 1rem;
+  }
+
+  .steps__item {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 0.2rem 1.1rem;
+    align-items: start;
+    text-align: left;
+    padding: 1.5rem 1.35rem;
+  }
+
+  .steps__num {
+    grid-column: 1;
+    grid-row: 1 / 3;
+    margin-bottom: 0;
+  }
+
+  .steps__item h3,
+  .steps__item p {
+    grid-column: 2;
+  }
+
+  .faq__intro {
+    padding: 1.9rem 1.5rem;
+  }
+
+  .stat {
+    padding: 1.5rem 1.35rem 1.6rem;
+  }
+
+  .stat__text {
+    font-size: 0.82rem;
+  }
+
   .cta {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
     padding: 2.2rem 1.6rem;
+  }
+
+  .cta__actions {
+    width: 100%;
+  }
+
+  .cta__actions .btn {
+    flex: 1;
   }
 
   .cta .btn {
@@ -1470,7 +3797,6 @@ img {
     padding-top: 0;
   }
 }
-
 /* Service detail content */
 .page-header__actions {
   display: flex;
@@ -1578,60 +3904,207 @@ img {
   font-weight: 600;
 }
 
-/* FAQ */
+/* FAQ — intro on the left as an ink card, accordions on the right */
 .faq {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 3.5rem;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 2.5rem;
   align-items: start;
+}
+
+.faq__intro {
+  position: sticky;
+  top: calc(var(--nav-h) + 1.5rem);
+  padding: 2.4rem 2rem;
+  border: 1px solid rgba(42, 3, 6, 0.32);
+  border-radius: 20px;
+  color: var(--cream);
+  background:
+    radial-gradient(ellipse 90% 70% at 0% 0%, rgba(217, 200, 154, 0.16), transparent 60%),
+    linear-gradient(160deg, var(--maroon-700) 0%, var(--maroon-900) 100%);
+  box-shadow: var(--shadow-md);
+}
+
+.faq__intro h2 {
+  color: var(--cream);
+}
+
+.faq__intro .lead {
+  margin-bottom: 0;
+  color: rgba(243, 236, 214, 0.8);
+}
+
+.faq__intro .eyebrow {
+  color: var(--gold-light);
+}
+
+.faq__intro .eyebrow::before {
+  background: var(--gold);
+}
+
+/* The header sits inside the card, so it must not carry the section spacing */
+.section__head--flush {
+  display: block;
+  margin-bottom: 0;
+}
+
+.faq__cta {
+  margin-top: 1.8rem;
 }
 
 .faq__list {
   display: grid;
-  gap: 0.9rem;
+  gap: 0.7rem;
 }
 
+/* Index, question and chevron share one row, matching the number-left header
+   on the Why cards. The number is decorative; the question is the label.
+   --faq-num and --faq-gap are set here so the answer can be indented to line
+   up under the question text without hardcoding the same numbers twice. */
 .faq__item {
+  --faq-pad: 1.35rem;
+  --faq-num: 1.75rem;
+  --faq-gap: 1rem;
+
+  position: relative;
+  overflow: hidden;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  border-radius: 16px;
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.faq__item:hover {
+  border-color: rgba(184, 155, 98, 0.45);
 }
 
 .faq__item[open] {
-  border-color: var(--gold);
-  box-shadow: var(--shadow-sm);
+  border-color: rgba(184, 155, 98, 0.6);
+  box-shadow: var(--shadow-md);
+}
+
+/* Gold rail grows down the left edge of the open question */
+.faq__item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--gold-light), var(--gold), var(--maroon-600));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.32s ease;
+}
+
+.faq__item[open]::before {
+  transform: scaleY(1);
 }
 
 .faq__item summary {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.1rem 1.3rem;
+  gap: var(--faq-gap);
+  padding: 1.2rem var(--faq-pad);
   font-weight: 600;
+  line-height: 1.45;
   color: var(--maroon-800);
   cursor: pointer;
   list-style: none;
+  transition: color 0.2s, padding 0.3s ease;
+}
+
+.faq__item summary:hover {
+  color: var(--maroon-600);
+}
+
+/* Tighter when the answer is showing, so the block reads as one unit */
+.faq__item[open] summary {
+  color: var(--maroon-700);
+  padding-bottom: 0.8rem;
 }
 
 .faq__item summary::-webkit-details-marker {
   display: none;
 }
 
-.faq__item summary .icon {
+.faq__num {
+  flex-shrink: 0;
+  min-width: var(--faq-num);
+  font-family: var(--font-brand);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  color: rgba(122, 29, 36, 0.4);
+  transition: color 0.25s;
+}
+
+.faq__item[open] .faq__num,
+.faq__item summary:hover .faq__num {
   color: var(--gold);
-  transition: transform 0.25s;
 }
 
-.faq__item[open] summary .icon {
+/* Pushed to the far right of the row regardless of how long the question is */
+.faq__chev {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--maroon-700);
+  background: var(--bg-alt);
+  transition: transform 0.3s, background 0.25s, color 0.25s;
+}
+
+.faq__item[open] .faq__chev {
   transform: rotate(180deg);
+  color: var(--gold-light);
+  background: var(--maroon-800);
 }
 
-.faq__item p {
+.faq__item .icon {
+  display: block;
+}
+
+/* Answers animate open and closed: a 0fr-to-1fr grid row tracks the content
+   height with no fixed pixel value and no JS measurement. */
+.faq__answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  padding-left: calc(var(--faq-pad) + var(--faq-num) + var(--faq-gap));
+  padding-right: var(--faq-pad);
+  transition: grid-template-rows 0.32s ease;
+}
+
+.faq__item[open] .faq__answer {
+  grid-template-rows: 1fr;
+}
+
+.faq__answer > p {
+  overflow: hidden;
   margin: 0;
-  padding: 0 1.3rem 1.2rem;
   color: var(--muted);
+  font-size: 0.97rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.faq__item[open] .faq__answer > p {
+  padding-bottom: 1.35rem;
+}
+
+/* Services index rail — the label sits above the chips a little earlier than
+   the other breakpoints here. Side by side, label plus six chips need roughly
+   1023px, so between 961 and 1022 they would wrap onto a second row with a
+   single chip stranded on it. Stacking earlier keeps one clean chip row. */
+@media (max-width: 1100px) {
+  .svc-index__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
 }
 
 @media (max-width: 960px) {
@@ -1640,14 +4113,125 @@ img {
     gap: 1rem;
   }
 
+  /* Sticky does nothing once the intro is full-width above the list, and it
+     sits in this block rather than the earlier one so it wins over the base rule */
+  .faq__intro {
+    position: static;
+  }
+
   .detail__main {
     gap: 3rem;
+  }
+
+  /* Both contact pairings collapse to one column. Sticky does nothing once
+     the panel sits above or below the flow, so it is reset here — this block
+     is late in the file, which is what lets it beat the base rules. */
+  .contact {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
+
+  .contact__aside,
+  .contact__nextintro {
+    position: static;
+  }
+
+  .contact__prep,
+  .contact__next {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.8rem;
+  }
+
+  /* Commit plates go to two, then the index rail stacks its label above the
+     chips so the chips get the full container width. */
+  .svc-commit {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Capability tiles go from four across to two */
+  .about__caps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  /* Three value plates become a single stack */
+  .about__values {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Two capability tiles across left ~165px of text each once the icon and
+     padding are taken out, which pushed the page 1px wide and wrapped every
+     heading onto three lines. One tile per row instead. */
+  .about__caps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  /* Paired fields go full width rather than squeezing two 150px inputs */
+  .form__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact__prep-list {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 600px) {
   .fit-list {
     grid-template-columns: 1fr;
+  }
+
+  .form {
+    padding: 1.6rem 1.3rem;
+  }
+
+  .contact__panel,
+  .contact__nextintro {
+    padding: 1.7rem 1.4rem;
+  }
+
+  /* Submit and note stack instead of sharing a row */
+  .form__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+
+  .form__actions .btn {
+    justify-content: center;
+  }
+
+  /* Single column of plates reads better than two cramped ones on a phone */
+  .svc-commit {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* Chips wrap on their own; the label stays on a line of its own */
+  .svc-index__link {
+    padding: 0.4rem 0.75rem 0.4rem 0.6rem;
+    font-size: 0.84rem;
+  }
+
+  /* Tighter row metrics on phones so the index indent stays shallow */
+  .faq__item {
+    --faq-pad: 1.1rem;
+    --faq-num: 1.5rem;
+    --faq-gap: 0.75rem;
+  }
+
+  .faq__item summary {
+    font-size: 0.97rem;
+  }
+
+  .faq__answer > p {
+    font-size: 0.93rem;
   }
 
   .page-header__actions .btn {
